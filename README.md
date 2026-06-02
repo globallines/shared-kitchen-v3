@@ -11,4 +11,4 @@ Modern rebuild of the Shared Kitchen app — Next.js (React) + Prisma + MySQL, d
 1. Push this repo to GitHub.
 2. Railway -> New Project -> Deploy from GitHub repo -> pick this repo.
 3. Railway auto-detects Next.js, builds, and serves on its assigned PORT.
-4. Add a MySQL database in the same project for Phase 2.
+4. Add a MySQL database in the same project for Phase 2. (v3)
