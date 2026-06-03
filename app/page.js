@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { currentUser, clearSession, db } from "../lib/server";
 import { Shell, PageHeader, rupee, PHOTO } from "../lib/ui";
+import DishImg from "../lib/DishImg";
 export const dynamic = "force-dynamic";
 
 async function logoutAction() { "use server"; await clearSession(); redirect("/login"); }
@@ -28,7 +29,7 @@ export default async function Home() {
       <PageHeader label={`TODAY · ${now.toLocaleDateString("en-IN", { day: "numeric", month: "short" }).toUpperCase()}`} title="Kitchen Home" initial={user.name[0]} />
 
       <div className="hero">
-        {hero?.photo ? <img src={PHOTO(hero.photo)} alt="" /> : <div className="ph" />}
+        <DishImg src={hero?.photo ? PHOTO(hero.photo) : null} fallback="" />
         <div className="hero-grad" />
         {hero?.name && <span className="hero-pill">&#x1F37D;&#xFE0F; {hero.name}</span>}
         <div className="hero-txt">

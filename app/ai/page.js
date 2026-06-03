@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { currentUser, db } from "../../lib/server";
 import { Shell, PageHeader, PHOTO } from "../../lib/ui";
+import DishImg from "../../lib/DishImg";
 export const dynamic = "force-dynamic";
 
 export default async function AI() {
@@ -18,7 +19,7 @@ export default async function AI() {
       <div className="grid2">
         {recipes.map((r) => (
           <div className="photocard" key={r.id}>
-            {r.photo ? <img src={PHOTO(r.photo)} alt="" /> : <div className="ph">&#x2728;</div>}
+            <DishImg src={PHOTO(r.photo)} fallback="✨" />
             <div className="ov" />
             <div className="cap"><b style={{ fontSize: 14 }}>{r.name}</b><span>{r.kcal ? `${r.kcal} kcal` : (r.servings ? `${r.servings} servings` : "recipe")}</span></div>
           </div>

@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { currentUser, db } from "../../lib/server";
 import { Shell, PageHeader, PHOTO } from "../../lib/ui";
+import DishImg from "../../lib/DishImg";
 export const dynamic = "force-dynamic";
 
 export default async function Cuisine() {
@@ -29,7 +30,7 @@ export default async function Cuisine() {
       <div className="grid2">
         {groups.map((g) => (
           <a className="photocard" key={g.cuisine} href="/cuisine">
-            {g.photo ? <img src={PHOTO(g.photo)} alt="" /> : <div className="ph">&#x1F37D;&#xFE0F;</div>}
+            <DishImg src={PHOTO(g.photo)} fallback="🍽️" />
             <div className="ov" />
             <div className="cap"><b>{g.cuisine}</b><span>{g.c} dishes</span></div>
           </a>
