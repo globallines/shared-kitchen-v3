@@ -30,7 +30,7 @@ export default async function Cuisine() {
       <div className="grid2">
         {groups.map((g) => (
           <a className="photocard" key={g.cuisine} href="/cuisine">
-            <DishImg src={PHOTO(g.photo)} fallback="🍽️" />
+            <DishImg label={g.cuisine} />
             <div className="ov" />
             <div className="cap"><b>{g.cuisine}</b><span>{g.c} dishes</span></div>
           </a>

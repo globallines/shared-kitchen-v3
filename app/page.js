@@ -29,7 +29,7 @@ export default async function Home() {
       <PageHeader label={`TODAY · ${now.toLocaleDateString("en-IN", { day: "numeric", month: "short" }).toUpperCase()}`} title="Kitchen Home" initial={user.name[0]} />
 
       <div className="hero">
-        <DishImg src={hero?.photo ? PHOTO(hero.photo) : null} fallback="" />
+        <DishImg label={hero?.name || "kitchen"} />
         <div className="hero-grad" />
         {hero?.name && <span className="hero-pill">&#x1F37D;&#xFE0F; {hero.name}</span>}
         <div className="hero-txt">

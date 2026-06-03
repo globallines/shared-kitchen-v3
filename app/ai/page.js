@@ -19,7 +19,7 @@ export default async function AI() {
       <div className="grid2">
         {recipes.map((r) => (
           <div className="photocard" key={r.id}>
-            <DishImg src={PHOTO(r.photo)} fallback="✨" />
+            <DishImg label={r.name} />
             <div className="ov" />
             <div className="cap"><b style={{ fontSize: 14 }}>{r.name}</b><span>{r.kcal ? `${r.kcal} kcal` : (r.servings ? `${r.servings} servings` : "recipe")}</span></div>
           </div>
