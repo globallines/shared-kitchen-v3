@@ -1,14 +1,22 @@
+import "./globals.css";
+import { Playfair_Display } from "next/font/google";
+
+const serif = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+  variable: "--font-serif",
+  display: "swap",
+});
+
 export const metadata = {
   title: "Shared Kitchen",
-  description: "Two families, one cook.",
+  description: "Two families. One cook. Zero confusion.",
 };
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body style={{ margin: 0, background: "#faf7f2", color: "#1c2b25",
-        fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}>
-        {children}
-      </body>
+    <html lang="en" className={serif.variable}>
+      <body>{children}</body>
     </html>
   );
 }
