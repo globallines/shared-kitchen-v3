@@ -1,10 +1,15 @@
 FROM php:8.2-apache
 
-# MySQL PDO driver + URL rewriting
-RUN docker-php-ext-install pdo_mysql && a2enmod rewrite
+# MySQL PDO driver
+RUN docker-php-ext-install pdo_mysql
 
-# Honor .htaccess rules (security denies for includes/, *.sql, *.md)
-RUN sed -ri 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+# Ensure exactly one Apache MPM (prefork, required by mod_php) + URL rewriting
+RUN (a2dismod mpm_event mpm_worker 2>/dev/null || true) \
+ && a2enmod mpm_prefork rewrite
+
+# Honor .htaccess rules (security denies for includes/, *.sql, *.md) + quiet ServerName
+RUN sed -ri 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf \
+ && printf '\nServerName localhost\n' >> /etc/apache2/apache2.conf
 
 # App code
 COPY . /var/www/html/
