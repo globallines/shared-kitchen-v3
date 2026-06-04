@@ -1,21 +1,23 @@
 import "./globals.css";
-import { Playfair_Display } from "next/font/google";
-
-const serif = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["600", "700"],
-  variable: "--font-serif",
-  display: "swap",
-});
 
 export const metadata = {
   title: "Shared Kitchen",
   description: "Two families. One cook. Zero confusion.",
+  manifest: "/manifest.json",
+  icons: { icon: "/favicon.png", apple: "/icon-192.png" },
+};
+
+export const viewport = {
+  themeColor: "#0f4c3a",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={serif.variable}>
+    <html lang="en">
       <body>{children}</body>
     </html>
   );
