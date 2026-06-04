@@ -1,7 +1,9 @@
 FROM php:8.2-apache
 
-# MySQL PDO driver (apache image already bundles the PHP runtime + extensions tooling)
-RUN docker-php-ext-install pdo_mysql
+# PHP extensions the app uses (pdo_mysql for DB, mbstring for text helpers)
+RUN apt-get update && apt-get install -y libonig-dev \
+ && docker-php-ext-install pdo_mysql mbstring \
+ && rm -rf /var/lib/apt/lists/*
 
 # App code
 COPY . /var/www/html/
