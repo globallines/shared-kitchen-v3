@@ -1,0 +1,13 @@
+# Block direct access to sensitive folders
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+</IfModule>
+
+<FilesMatch "\.(sql|md)$">
+    Require all denied
+</FilesMatch>
+
+# Allow includes folder PHP files only when included
+<Files "config.php">
+    Require all denied
+</Files>

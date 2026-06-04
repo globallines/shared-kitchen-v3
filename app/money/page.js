@@ -15,13 +15,15 @@ export default async function Money({ searchParams }) {
   const [[{ m }]] = await conn.query("SELECT COALESCE(SUM(amount),0) m FROM expenses WHERE date>=DATE_FORMAT(CURDATE(),'%Y-%m-01')");
   const [[{ tot }]] = await conn.query("SELECT COALESCE(SUM(amount),0) tot FROM expenses");
   const [[{ pay }]] = await conn.query("SELECT COALESCE(SUM(amount),0) pay FROM payments");
-  const [exp] = await conn.query("SELECT e.item_name,e.amount,e.category,e.date,u.name buyer FROM expenses e LEFT JOIN users u ON u.id=e.purchased_by ORDER BY e.date DESC,e.id DESC LIMIT 12");
+  const [exp] = await conn.query("SELECT e.id,e.item_name,e.amount,e.category,e.date,u.name buyer FROM expenses e LEFT JOIN users u ON u.id=e.purchased_by ORDER BY e.date DESC,e.id DESC LIMIT 12");
   const [families] = await conn.query("SELECT id,name FROM families ORDER BY id");
   const monthName = new Date().toLocaleDateString("en-IN", { month: "long", year: "numeric" }).toUpperCase();
 
   const banner =
     sp.ok === "expense" ? { cls: "ok", txt: "✅ Expense added." } :
     sp.ok === "payment" ? { cls: "ok", txt: "✅ Payment recorded." } :
+    sp.ok === "updated" ? { cls: "ok", txt: "✅ Expense updated." } :
+    sp.ok === "deleted" ? { cls: "ok", txt: "🗑️ Expense deleted." } :
     sp.err === "expense" ? { cls: "err", txt: "⚠️ Enter an item name and a valid amount." } :
     sp.err === "payment" ? { cls: "err", txt: "⚠️ Enter a valid amount and family." } : null;
 
@@ -81,11 +83,11 @@ export default async function Money({ searchParams }) {
       <div className="sectlabel">Recent expenses</div>
       <div className="card">
         {exp.length === 0 && <div className="empty"><div className="ic">&#x1F4CB;</div>No expenses yet.</div>}
-        {exp.map((e, i) => (
-          <div className="row" key={i}>
+        {exp.map((e) => (
+          <a className="row rowlink" key={e.id} href={`/money/${e.id}`}>
             <div><div className="t">{e.item_name}</div><div className="s">{e.category} &middot; {e.buyer || "—"} &middot; {new Date(e.date).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}</div></div>
-            <div style={{ fontWeight: 700, color: "var(--green)" }}>{rupee(e.amount)}</div>
-          </div>
+            <div style={{ fontWeight: 700, color: "var(--green)" }}>{rupee(e.amount)} <span className="rowchev">&#8250;</span></div>
+          </a>
         ))}
       </div>
     </Shell>
